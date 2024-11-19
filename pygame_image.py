@@ -17,28 +17,30 @@ def main():
     kk_rct .center = 300,200
     tmr = 0
     x = 0
-    xa = 0
     while True:
         for event in pg.event.get():
             if event.type == pg.QUIT: return
 
-        screen.blit(bg_img, [-x, 0])
-        screen.blit(bgf_img, [-x+1600, 0])
-        screen.blit(bg_img, [-x+3200, 0])
-        screen.blit(bgf_img, [-x+4800, 0])
-        x += 1
-        if x == 4800:
-            x = 0
+        x = -(tmr%3200)
+        screen.blit(bg_img,  [x, 0])
+        screen.blit(bgf_img, [x+1600, 0])
+        screen.blit(bg_img,  [x+3200, 0])
+        screen.blit(bgf_img, [x+4800, 0])
         key_lst = pg.key.get_pressed()
+        x_ip,y_ip = -1,0
         if key_lst[pg.K_UP]:
-            kk_rct.move_ip((0,-1))
+            x_ip = 0 
+            y_ip = -1
         elif key_lst[pg.K_DOWN]:
-            kk_rct.move_ip((0,+1))
+            x_ip = 0 
+            y_ip = +1
         elif key_lst[pg.K_LEFT]:
-            kk_rct.move_ip((-1,0))
+            x_ip = -1 
+            y_ip = 0
         elif key_lst[pg.K_RIGHT]:
-            kk_rct.move_ip((+2,0))
-        kk_rct.move_ip((-1,0))
+            x_ip = +2
+            y_ip = 0
+        kk_rct.move_ip((x_ip,y_ip))
         screen.blit(kk_img, kk_rct)
         pg.display.update()
         tmr += 1        
